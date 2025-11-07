@@ -1,0 +1,60 @@
+
+<section class="content">
+  <header class="d-flex justify-content-between align-items-center header">
+    <h2  class="title">Expense Dashboard</h2>
+
+    <div class="d-flex align-items-center gap-2">
+      <mat-form-field appearance="outline" class="currency-field">
+        <mat-label>Currency</mat-label>
+        <mat-select
+          [(value)]="selectedCurrency"
+          (selectionChange)="onCurrencyChange($event.value)"
+        >
+          <mat-option value="INR">INR </mat-option>
+          <mat-option value="USD">USD $</mat-option>
+          <mat-option value="EUR">EUR €</mat-option>
+          <mat-option value="GBP">GBP £</mat-option>
+          <mat-option value="JPY">JPY ¥</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="sync" (click)="syncRates()">Sync Rates
+      </button>
+    </div>
+  </header>
+
+  <div class="dashboard-grid">
+    <div class="card shadow">
+      <h5>Total Expenses</h5>
+      <h2>{{ totalExpenses | number: '1.2-2' }} {{ selectedCurrency }}</h2>
+      <p class="muted">Across all categories</p>
+    </div>
+
+    <div class="card shadow">
+      <h5>This Month's Spending</h5>
+      <h2>{{ monthlyExpenses | number: '1.2-2' }} {{ selectedCurrency }}</h2>
+      <p class="muted">{{ currentMonth | date: 'MMMM yyyy' }}</p>
+    </div>
+
+    <div class="card shadow conversion-card" *ngIf="rate">
+      <h5>Conversion Rate</h5>
+      <h2>1 INR = {{ (rate) | number: '1.4-4' }} {{ selectedCurrency }}</h2>
+      <p class="muted">Based on latest sync</p>
+    </div>
+  </div>
+
+  <div class="chart-section mt-4">
+    <h4>Expenses by Category ({{ selectedCurrency }})</h4>
+    <apx-chart
+      *ngIf="barChartOptions"
+      #chart
+      [series]="barChartOptions.series || []"
+      [chart]="barChartOptions?.chart || { type: 'bar', height: 350 }"
+      [xaxis]="barChartOptions.xaxis || {}"
+      [colors]="barChartOptions.colors || []"
+      [plotOptions]="barChartOptions.plotOptions || {}"
+      [dataLabels]="barChartOptions.dataLabels || {}"
+      [title]="barChartOptions.title || {}"
+    ></apx-chart>
+  </div>
+</section>
+
