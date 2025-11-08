@@ -130,7 +130,7 @@ export class MainComponent implements OnInit {
       series: [{ name: `Expenses (${this.selectedCurrency})`, data: values }],
       chart: { type: 'bar', height: 350 },
       xaxis: { categories },
-      colors: ['#4CAF50'],
+      colors: ['#81C784', '#64B5F6', '#FFD54F', '#FF8A65', '#BA68C8', '#4DD0E1'],
       plotOptions: { bar: { borderRadius: 6, columnWidth: '55%', distributed: true } },
       dataLabels: { enabled: true },
       title: { text: `Expenses by Category (${this.selectedCurrency})`, align: 'left' },

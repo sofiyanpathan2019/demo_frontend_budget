@@ -65,7 +65,6 @@
                     </mat-checkbox>
                   </mat-cell>
                 </ng-container>
-                <!-- ID Column -->
                 <ng-container matColumnDef="id">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
                   <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
@@ -116,12 +115,10 @@
                   [style.cursor]="'pointer'" matRipple>
                 </mat-row>
               </table>
-              <!-- Loading spinner -->
               <div *ngIf="exampleDatabase?.isTblLoading" class="tbl-spinner">
                 <mat-progress-spinner color="primary" [diameter]="40" mode="indeterminate">
                 </mat-progress-spinner>
               </div>
-              <!-- context menu start -->
               <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
                 [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
               </div>
@@ -167,8 +164,6 @@
                   <span>Item 3</span>
                 </button>
               </mat-menu>
-              <!-- context menu end -->
-
               <div *ngIf="!exampleDatabase?.isTblLoading" class="no-results"
                 [style.display]="dataSource.renderedData.length === 0 ? '' : 'none'">
                 No results

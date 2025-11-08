@@ -10,15 +10,21 @@
           [(value)]="selectedCurrency"
           (selectionChange)="onCurrencyChange($event.value)"
         >
-          <mat-option value="INR">INR </mat-option>
-          <mat-option value="USD">USD $</mat-option>
-          <mat-option value="EUR">EUR €</mat-option>
-          <mat-option value="GBP">GBP £</mat-option>
-          <mat-option value="JPY">JPY ¥</mat-option>
+          <mat-option value="INR">🇮🇳 ₹ INR</mat-option>
+          <mat-option value="USD">🇺🇸 $ USD</mat-option>
+          <mat-option value="EUR">🇪🇺 € EUR</mat-option>
+          <mat-option value="GBP">🇬🇧 £ GBP</mat-option>
+          <mat-option value="JPY">🇯🇵 ¥ JPY</mat-option>
+
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button color="primary" class="sync" (click)="syncRates()">Sync Rates
-      </button>
+    <button mat-raised-button color="primary" class="sync" (click)="syncRates()" [disabled]="isSyncing">
+      <span *ngIf="!isSyncing">Sync Rates</span>
+      <span *ngIf="isSyncing">
+        <mat-progress-spinner diameter="18" mode="indeterminate"></mat-progress-spinner>
+      </span>
+    </button>
+
     </div>
   </header>
 

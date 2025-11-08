@@ -16,7 +16,6 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   dataChange: BehaviorSubject<AdvanceTable[]> = new BehaviorSubject<
     AdvanceTable[]
   >([]);
-  // Temporarily stores data from dialogs
   dialogData!: AdvanceTable;
   constructor(private httpClient: HttpClient) {
     super();
@@ -24,10 +23,11 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   get data(): AdvanceTable[] {
     return this.dataChange.value;
   }
+
   getDialogData() {
     return this.dialogData;
   }
-  /** CRUD METHODS */
+
   getAllAdvanceTables(): void {
     this.subs.sink = this.httpClient
       .get<AdvanceTable[]>(this.API_URL)
@@ -64,7 +64,6 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
       console.log(id);
       },
       (err: HttpErrorResponse) => {
-         // error code here
       }
     );
   }
@@ -72,5 +71,5 @@ export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
   syncrates(): void {
     this.httpClient.post<AdvanceTable>(this.sync, {})
     .pipe(catchError(this.handleError));
-    }
+  }
 }

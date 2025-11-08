@@ -1,5 +1,5 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Component, Inject, Output } from '@angular/core';
+import { Component, Inject, EventEmitter, Output  } from '@angular/core';
 import { AdvanceTableService } from '../../advance-table.service';
 import {
   UntypedFormControl,
@@ -10,7 +10,6 @@ import {
 import { AdvanceTable } from '../../advance-table.model';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { formatDate } from '@angular/common';
-import { Title } from 'chart.js';
 
 export interface DialogData {
   id: number;
@@ -29,7 +28,7 @@ export class FormDialogComponent {
   dialogTitle: string;
   advanceTableForm: UntypedFormGroup;
   advanceTable: AdvanceTable;
-  
+  @Output() loadData = new EventEmitter<void>();
 
   constructor(
     public dialogRef: MatDialogRef<FormDialogComponent>,
@@ -37,7 +36,6 @@ export class FormDialogComponent {
     public advanceTableService: AdvanceTableService,
     private fb: UntypedFormBuilder
   ) {
-    // Set the defaults
     this.action = data.action;
     if (this.action === 'edit') {
       this.dialogTitle =
@@ -52,7 +50,6 @@ export class FormDialogComponent {
   }
   formControl = new UntypedFormControl('', [
     Validators.required,
-    // Validators.email,
   ]);
   getErrorMessage() {
     return this.formControl.hasError('required')
@@ -74,7 +71,6 @@ export class FormDialogComponent {
     });
   }
   submit() {
-    // emppty stuff
   }
   onNoClick(): void {
     this.dialogRef.close();
@@ -84,16 +80,16 @@ export class FormDialogComponent {
       this.advanceTableService.updateAdvanceTable(
         this.advanceTableForm.getRawValue()
       ).subscribe({
-        next: () => {
-          this.advanceTableService.dialogData = this.advanceTableForm.getRawValue();
+        next: (data) => {
+          this.loadData.emit();
         }
       });
     } else {
       this.advanceTableService.addAdvanceTable(
         this.advanceTableForm.getRawValue()
       ).subscribe({
-        next: () => {
-          this.advanceTableService.dialogData = this.advanceTableForm.getRawValue();
+        next: (data) => {
+          this.loadData.emit();
         }
       });
     }

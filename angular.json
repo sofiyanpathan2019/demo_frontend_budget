@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "atrio": {
+    "budget_frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/atrio",
+            "outputPath": "dist/budget_frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -100,10 +100,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "atrio:build:production"
+              "browserTarget": "budget_frontend:build:production"
             },
             "development": {
-              "browserTarget": "atrio:build:development"
+              "browserTarget": "budget_frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -111,7 +111,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "atrio:build"
+            "browserTarget": "budget_frontend:build"
           }
         },
         "test": {
