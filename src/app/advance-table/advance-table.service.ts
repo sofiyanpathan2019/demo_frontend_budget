@@ -5,11 +5,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { UnsubscribeOnDestroyAdapter } from '../shared/UnsubscribeOnDestroyAdapter';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
+import { environment } from '../../environments/environment.prod';
 @Injectable()
 export class AdvanceTableService extends UnsubscribeOnDestroyAdapter {
-  private readonly API_URL = 'http://localhost:8000/api/expenses/';
-  private readonly sync = 'http://localhost:8000/api/sync-rates/';
+  public apiUrl = environment.apiUrl;
+  private readonly API_URL = `${this.apiUrl}expenses/`;
+  private readonly sync = `${this.apiUrl}sync-rates/`;
 
   isTblLoading = true;
   dataChange: BehaviorSubject<AdvanceTable[]> = new BehaviorSubject<

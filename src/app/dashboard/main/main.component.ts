@@ -9,7 +9,7 @@ import {
   ApexPlotOptions,
   ApexTitleSubtitle,
 } from 'ng-apexcharts';
-import { co } from '@fullcalendar/core/internal-common';
+import { environment } from '../../../environments/environment.prod';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
     dataLabels: { enabled: true },
     title: { text: 'Expenses by Category', align: 'left' },
   };
-
+  
   isSyncing = false;
   syncSuccess = false;
   syncError = false;
@@ -50,8 +50,10 @@ export class MainComponent implements OnInit {
   selectedCurrency = 'INR';
   rate= 1;
   rates:any;
+  apiUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   ngOnInit() {
     this.loadExpenses();
@@ -59,7 +61,7 @@ export class MainComponent implements OnInit {
   }
 
   loadExpenses() {
-    const url = 'http://localhost:8000/api/expenses/';
+    const url = `${this.apiUrl}expenses/`;
     this.httpClient.get<any[]>(url).subscribe({
       next: (data) => {
         this.expenses = data;
@@ -72,7 +74,7 @@ export class MainComponent implements OnInit {
   }
 
   loadRates() {
-    const url = 'http://localhost:8000/api/rates/';
+    const url = `${this.apiUrl}rates/`;
     this.httpClient.get<any>(url).subscribe({
       next: (res) => {
         this.rates = res
@@ -145,7 +147,7 @@ export class MainComponent implements OnInit {
     this.syncSuccess = false;
     this.syncError = false;
 
-    const url = 'http://localhost:8000/api/sync-rates/';
+    const url = `${this.apiUrl}sync-rates/`;
     this.httpClient.post(url, {}).subscribe({
       next: (response) => {
         console.log('Rates synced:', response);
